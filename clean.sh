@@ -1,0 +1,1 @@
+rm -rf siml test/reader test/new.png test/mod.png benchmark/benchmark benchmark/mod.png objects
