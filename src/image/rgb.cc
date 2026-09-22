@@ -298,6 +298,17 @@ namespace siml {
 	}
 
 
+	RGB_8& RGB_8::operator = (uint8_t a){
+
+		r = a;
+		g = a;
+		b = a;
+
+		return *this;
+	}
+
+
+
 	RGB_16& operator += (RGB_16& a, const RGB_16& b){
 
 		const uint32_t max = siml::util::get_max_possible_values_in_bit_depth(16);
@@ -542,6 +553,24 @@ namespace siml {
 		RGB_16 c = a;
 		c %= b;
 		return c;
+	}
+
+	RGB_16& RGB_16::operator = (uint16_t a){
+
+		r = a;
+		g = a;
+		b = a;
+
+		return *this;
+	}
+
+	RGB_16& RGB_16::operator = (uint8_t a){
+
+		r = a;
+		g = a;
+		b = a;
+
+		return *this;
 	}
 
 
@@ -871,6 +900,35 @@ namespace siml {
 		RGB_32 c = a;
 		c %= b;
 		return c;
+	}
+
+
+
+	RGB_32& RGB_32::operator = (uint16_t a){
+
+		r = a;
+		g = a;
+		b = a;
+
+		return *this;
+	}
+
+	RGB_32& RGB_32::operator = (uint8_t a){
+
+		r = a;
+		g = a;
+		b = a;
+
+		return *this;
+	}
+
+	RGB_32& RGB_32::operator = (uint32_t a){
+
+		r = a;
+		g = a;
+		b = a;
+
+		return *this;
 	}
 
 	// it's recommended to not touch these overloads unless you know what you are doing as even a minor change can brick the whole library.

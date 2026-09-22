@@ -5,15 +5,16 @@ echo ""
 
 # Image
 echo "Making the library!"
-g++ src/image/image.cc -c -o siml/image.o &&\
-g++ src/image/imagereader.cc -c -o siml/imagereader.o &&\
-g++ src/image/rgb.cc -c -o siml/rgb.o &&\
-g++ src/util.cc -c -o siml/util.o &&\
+g++ -O3 src/image/image.cc -c -o siml/image.o &&\
+g++ -O3 src/image/imagereader.cc -c -o siml/imagereader.o &&\
+g++ -O3 src/image/rgb.cc -c -o siml/rgb.o &&\
+g++ -O3 src/util.cc -c -o siml/util.o &&\
 echo ""
 
 # Effects
 echo "Making the effects!"
-g++ src/effects/brightness.cc -c -o siml/brightness.o &&\
+g++ -O3 src/effects/brightness.cc -c -o siml/brightness.o &&\
+g++ -O3 src/effects/grayscale.cc -c -o siml/grayscale.o &&\
 echo ""
 
 
@@ -23,11 +24,11 @@ echo "Making the test executable!"
 
 # g++ siml/* -o test/reader
 
-g++ test/effect_apply.cc siml/* -o test/effect_apply
+g++ -O3 test/effect_apply.cc siml/* -o test/effect_apply
 echo ""
 
 
 # benchmark
 echo "Making the benchmark executable!"
-g++ benchmark/benchmark.cc siml/* -o benchmark/benchmark
+g++ -O3 benchmark/benchmark.cc siml/* -o benchmark/benchmark
 echo ""

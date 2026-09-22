@@ -1679,6 +1679,7 @@ namespace siml {
 		image.width = width;
 		image.height = height;
 		image.bitdepth = bit_depth;
+		image.total_pixels = std::size_t(width) * std::size_t(height);
 
 		const std::size_t pixel_count =
 			static_cast<std::size_t>(width) *

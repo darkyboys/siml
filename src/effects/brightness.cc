@@ -147,16 +147,16 @@ namespace siml::effect {
 
             if ((int)img.bitdepth <= 8){
 
-                uint8_t incr = util::normalize_percentage(static_cast<uint8_t>(value)) * util::get_max_possible_values_in_bit_depth(img.bitdepth);
-                for (std::size_t i = 0;i < img.height * img.width;i++)
+                uint8_t incr = util::normalize_percentage(value) * util::get_max_possible_values_in_bit_depth(img.bitdepth);
+                for (std::size_t i = 0;i < img.total_pixels;i++)
                     img.pixels_8bit[i] += incr;
 
             }
 
             else if ((int)img.bitdepth <= 16){
 
-                uint16_t incr = util::normalize_percentage(static_cast<uint16_t>(value)) * util::get_max_possible_values_in_bit_depth(img.bitdepth);
-                for (std::size_t i = 0;i < img.height * img.width;i++)
+                uint16_t incr = util::normalize_percentage(value) * util::get_max_possible_values_in_bit_depth(img.bitdepth);
+                for (std::size_t i = 0;i < img.total_pixels;i++)
                     img.pixels_16bit[i] += incr;
 
             }
@@ -164,24 +164,84 @@ namespace siml::effect {
             else if ((int)img.bitdepth <= 32){
 
                 uint32_t incr = util::normalize_percentage(value) * util::get_max_possible_values_in_bit_depth(img.bitdepth);
-                for (std::size_t i = 0;i < img.height * img.width;i++)
+                for (std::size_t i = 0;i < img.total_pixels;i++)
                     img.pixels_32bit[i] += incr;
 
+            }
+
+            else {
+
+                throw std::runtime_error("SIML Error From siml::effect::brightness(): Invalid bit depth found in the given image.\n");            
+            
+            }
+
+        }
+        else if (unit == NEGATIVE_PERCENTAGE){
+
+            if ((int)img.bitdepth <= 8){
+
+                uint8_t incr = util::normalize_percentage(value) * util::get_max_possible_values_in_bit_depth(img.bitdepth);
+                for (std::size_t i = 0;i < img.total_pixels;i++)
+                    img.pixels_8bit[i] -= incr;
+
+            }
+
+            else if ((int)img.bitdepth <= 16){
+
+                uint16_t incr = util::normalize_percentage(value) * util::get_max_possible_values_in_bit_depth(img.bitdepth);
+                for (std::size_t i = 0;i < img.total_pixels;i++)
+                    img.pixels_16bit[i] -= incr;
+
+            }
+
+            else if ((int)img.bitdepth <= 32){
+
+                uint32_t incr = util::normalize_percentage(value) * util::get_max_possible_values_in_bit_depth(img.bitdepth);
+                for (std::size_t i = 0;i < img.total_pixels;i++)
+                    img.pixels_32bit[i] -= incr;
+
+            }
+
+            else {
+
+                throw std::runtime_error("SIML Error From siml::effect::brightness(): Invalid bit depth found in the given image.\n");            
+            
             }
 
         }
         else if (unit == PIXEL) {
             if ((int)img.bitdepth <= 8){
-                for (std::size_t i = 0;i < img.height * img.width;i++)
+                for (std::size_t i = 0;i < img.total_pixels;i++)
                 img.pixels_8bit[i] += static_cast<uint8_t>(value);
             }
             else if ((int)img.bitdepth <= 16){
-                for (std::size_t i = 0;i < img.height * img.width;i++)
+                for (std::size_t i = 0;i < img.total_pixels;i++)
                 img.pixels_16bit[i] += static_cast<uint16_t>(value);
             }
             else if ((int)img.bitdepth <= 32){
-                for (std::size_t i = 0;i < img.height * img.width;i++)
+                for (std::size_t i = 0;i < img.total_pixels;i++)
                 img.pixels_32bit[i] += value;
+            }
+            else {
+                throw std::runtime_error("SIML Error From siml::effect::brightness(): Invalid bit depth found in the given image.\n");            
+            }
+        }
+
+        else if (unit == NEGATIVE_PIXEL) {
+            if ((int)img.bitdepth <= 8){
+                for (std::size_t i = 0;i < img.total_pixels;i++)
+                img.pixels_8bit[i] -= static_cast<uint8_t>(value);
+            }
+            else if ((int)img.bitdepth <= 16){
+                for (std::size_t i = 0;i < img.total_pixels;i++)
+                img.pixels_16bit[i] -= static_cast<uint16_t>(value);
+            }
+            else if ((int)img.bitdepth <= 32){
+                for (std::size_t i = 0;i < img.total_pixels;i++)
+                img.pixels_32bit[i] -= value;
+            }
+            else {
+                throw std::runtime_error("SIML Error From siml::effect::brightness(): Invalid bit depth found in the given image.\n");            
             }
         }
 

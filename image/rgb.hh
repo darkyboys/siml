@@ -141,6 +141,8 @@ namespace siml {
                 g = 0, 
                 b = 0;
 
+		RGB_8& operator = (uint8_t a);
+
     };
 
 
@@ -149,6 +151,9 @@ namespace siml {
         uint16_t r = 0, 
                  g = 0, 
                  b = 0;
+		
+		RGB_16& operator = (uint16_t a);
+		RGB_16& operator = (uint8_t a);
 
     };
 
@@ -158,6 +163,10 @@ namespace siml {
         uint32_t r = 0, 
                  g = 0, 
                  b = 0;
+
+		RGB_32& operator = (uint32_t a);
+		RGB_32& operator = (uint16_t a);
+		RGB_32& operator = (uint8_t a);
 
     };
 
@@ -186,7 +195,6 @@ namespace siml {
 	RGB_8 operator * (const RGB_8& a, const uint8_t& b);
 	RGB_8 operator / (const RGB_8& a, const uint8_t& b);
 	RGB_8 operator % (const RGB_8& a, const uint8_t& b);
-
 
 	// RGB_16
 	RGB_16& operator += (RGB_16& a, const RGB_16& b);

@@ -434,4 +434,14 @@ int main()
         },
         1000
     );
+
+    benchmark(
+        "grayscale",
+        [&]() {
+            siml::effect::grayscale(
+                image
+            );
+        },
+        1000
+    );
 }

@@ -137,5 +137,6 @@ express Statement of Purpose.
 #include "util.hh"
 #include "image/imagereader.hh"
 #include "effects/brightness.hh"
+#include "effects/grayscale.hh"
 
 #endif

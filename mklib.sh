@@ -11,15 +11,16 @@ mkdir -p siml 2>/dev/null
 
 echo "Compiling image sources..."
 
-g++ src/image/image.cc -c -o objects/image.o && \
-g++ src/image/imagereader.cc -c -o objects/imagereader.o && \
-g++ src/image/rgb.cc -c -o objects/rgb.o && \
-g++ src/util.cc -c -o objects/util.o && \
+g++ -O3 src/image/image.cc -c -o objects/image.o && \
+g++ -O3 src/image/imagereader.cc -c -o objects/imagereader.o && \
+g++ -O3 src/image/rgb.cc -c -o objects/rgb.o && \
+g++ -O3 src/util.cc -c -o objects/util.o && \
 
 echo ""
 echo "Compiling effects..."
 
-g++ src/effects/brightness.cc -c -o objects/brightness.o && \
+g++ -O3 src/effects/brightness.cc -c -o objects/brightness.o && \
+g++ -O3 src/effects/grayscale.cc -c -o objects/grayscale.o && \
 
 echo ""
 echo "Creating static library..."

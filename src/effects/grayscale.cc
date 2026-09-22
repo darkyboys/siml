@@ -128,39 +128,60 @@ express Statement of Purpose.
 // A Library specifically made to be fully STL Compatible and extremely easy to use with full transparency.
 // The entire library is cuvered under the CC0 v1 Universal License.
 
-#ifndef SIML_UTIL
-#define SIML_UTIL
-
-#include <atomic>
+#include "../../effects/grayscale.hh"
+#include "../../siml.hh"
+#include <algorithm>
+#include <chrono>
 #include <cstdint>
+#include <stdexcept>
+#include <thread>
+#include <iostream>
+// namespace siml{
+//     std::atomic<uint8_t> total_threads = std::thread::hardware_concurrency();
+//     std::atomic<uint8_t> active_threads = 0;
+// }
 
-namespace siml {
-    enum Unit{ // Used by a lots of effects
-        PERCENTAGE,
-        NEGATIVE_PERCENTAGE,
-        NEGATIVE_PIXEL,
-        PIXEL,
-        INTEGER
-    };
+namespace siml::effect {
 
-    extern std::atomic<uint8_t> total_threads;
-    extern std::atomic<uint8_t> active_threads; // Must not be set by the programmer.
+    void grayscale(
+        Image& img
+    ){
+        if ((int)img.bitdepth <= 8){
+            for (std::size_t i = 0;i < img.total_pixels;i++){
+                uint8_t min = std::min({
+                    img.pixels_8bit[i].r,
+                    img.pixels_8bit[i].g,
+                    img.pixels_8bit[i].b
+                });
+                img.pixels_8bit[i] = min;
+            }
+        }
+
+        else if ((int)img.bitdepth <= 16){
+            for (std::size_t i = 0;i < img.total_pixels;i++){
+                uint16_t min = std::min({
+                    img.pixels_16bit[i].r,
+                    img.pixels_16bit[i].g,
+                    img.pixels_16bit[i].b
+                });
+                img.pixels_16bit[i] = min;
+            }
+        }
+
+        else if ((int)img.bitdepth <= 32){
+            for (std::size_t i = 0;i < img.total_pixels;i++){
+                uint32_t min = std::min({
+                    img.pixels_32bit[i].r,
+                    img.pixels_32bit[i].g,
+                    img.pixels_32bit[i].b
+                });
+                img.pixels_32bit[i] = min;
+            }
+        }
+
+        else {
+            throw std::runtime_error("SIML Error From siml::effect::grayscale(): Invalid bit depth found in the given image.\n");
+        }
+    }
+
 }
-
-namespace siml::util {
-
-    double normalize_percentage( // Throws an exception if the entered input was invalid otherwise converts the percentage into unit values ranging from -1.0 to +1.0
-
-        double percentage // for accepting negative inputs.
-
-    );
-
-    uint32_t get_max_possible_values_in_bit_depth(
-
-        unsigned char bitdepth
-
-    ) noexcept;
-
-}
-
-#endif

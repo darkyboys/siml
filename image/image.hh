@@ -143,6 +143,8 @@ namespace siml {
         
         uint8_t bitdepth = 8; // default, Note that this actually switches the pixel vectors. And 10bit images will be stored in the 16BIT RGB Vector for the consistency. And later conversion will be done through reinterpret_cast so even though the internal processing will be 16 BIT the exported output will usually be 10BIT How ever the Writer can export 16bit directly if the data is there.
 
+        std::size_t total_pixels = 0;
+
         std::vector <RGB_8> pixels_8bit;
         std::vector <RGB_16> pixels_16bit;
         std::vector <RGB_32> pixels_32bit;

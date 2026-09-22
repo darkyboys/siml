@@ -128,38 +128,18 @@ express Statement of Purpose.
 // A Library specifically made to be fully STL Compatible and extremely easy to use with full transparency.
 // The entire library is cuvered under the CC0 v1 Universal License.
 
-#ifndef SIML_UTIL
-#define SIML_UTIL
+#ifndef SIML_EFFECT_GRAYSCALE
+#define SIML_EFFECT_GRAYSCALE
 
-#include <atomic>
+#include "../util.hh"
+#include "../image/image.hh"
 #include <cstdint>
 
-namespace siml {
-    enum Unit{ // Used by a lots of effects
-        PERCENTAGE,
-        NEGATIVE_PERCENTAGE,
-        NEGATIVE_PIXEL,
-        PIXEL,
-        INTEGER
-    };
+namespace siml::effect {
 
-    extern std::atomic<uint8_t> total_threads;
-    extern std::atomic<uint8_t> active_threads; // Must not be set by the programmer.
-}
-
-namespace siml::util {
-
-    double normalize_percentage( // Throws an exception if the entered input was invalid otherwise converts the percentage into unit values ranging from -1.0 to +1.0
-
-        double percentage // for accepting negative inputs.
-
+    void grayscale(
+        Image& img
     );
-
-    uint32_t get_max_possible_values_in_bit_depth(
-
-        unsigned char bitdepth
-
-    ) noexcept;
 
 }
 

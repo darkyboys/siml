@@ -120,9 +120,22 @@ Effects operate directly on the supplied `Image`.
 ## Brightness
 
 Currently, SIML provides a brightness effect.
+The brightness effect allows us to change the brightness of the image.
 
-### Pixel mode
+### Syntax
+```cpp
+siml::effect::brightness(
+    <Image>,
+    <Value unsigned integer>,
+    <Unit>
+);
+```
 
+**It supports 4 units:**
+### Pixel unit
+This unit allows us to increase the brightness upto `x` pixels. 
+
+Example:
 ```cpp
 siml::effect::brightness(
     image,
@@ -131,8 +144,10 @@ siml::effect::brightness(
 );
 ```
 
-### Percentage mode
+### Percentage unit
+This unit allows us to increase the brightness upto `x`%. 
 
+Example:
 ```cpp
 siml::effect::brightness(
     image,
@@ -141,7 +156,51 @@ siml::effect::brightness(
 );
 ```
 
+### Negative Pixel unit
+This unit allows us to decrease the brightness upto `x` pixels. 
+
+Example:
+```cpp
+siml::effect::brightness(
+    image,
+    10,
+    siml::NEGATIVE_PIXEL
+);
+```
+
+### Negative Percentage unit
+This unit allows us to decrease the brightness upto `x`%. 
+
+Example:
+```cpp
+siml::effect::brightness(
+    image,
+    10,
+    siml::NEGATIVE_PERCENTAGE
+);
+```
+
 The first argument is always the image being manipulated.
+
+---
+
+## Grayscale
+
+SIML provides a grayscale effect which allows to turn the entire image into black & white.
+
+### Syntax
+```cpp
+siml::effect::grayscale(
+    <Image>
+);
+```
+
+Example:
+```cpp
+siml::effect::grayscale(
+    image
+);
+```
 
 ---
 
@@ -157,9 +216,9 @@ effect(image, value, unit);
 
 The goal is that using SIML should require very little knowledge of its internal implementation.
 
-### Performance First
+### Performance & Memory First
 
-SIML is designed with performance in mind.
+SIML is designed with performance and memory usage in mind.
 
 For example, the brightness effect operates directly on the underlying pixel buffer using a tight loop rather than introducing unnecessary per-pixel abstractions.
 
@@ -173,6 +232,8 @@ Median  : ~14.04 ms
 across 1000 iterations in the current benchmark environment.
 
 Benchmark results depend on hardware, compiler, optimization settings, operating system, and image representation, so these numbers should be treated as a reference rather than a universal performance guarantee.
+
+While comparing SIML against other libraries, SIML Might actually be slower on basic effects because SIML have to do much more than just directly manipulating the image. As SIML supports variable bitdepth internally (upto 32bit) it allows very low memory usage (Which can also be tested via benchmark, The claim is actually made after testing).
 
 ---
 
