@@ -134,803 +134,841 @@ express Statement of Purpose.
 namespace siml {
 
 	RGB_8& operator += (RGB_8& a, const RGB_8& b){
-
-		const uint32_t max = siml::util::get_max_possible_values_in_bit_depth(8);
-
+		constexpr uint16_t max = UINT8_MAX;
+	
 		a.r = (a.r > max - b.r) ? max : a.r + b.r;
 		a.g = (a.g > max - b.g) ? max : a.g + b.g;
 		a.b = (a.b > max - b.b) ? max : a.b + b.b;
-
+	
 		return a;
 	}
-
+	
 	RGB_8& operator -= (RGB_8& a, const RGB_8& b){
-
 		a.r = (a.r < b.r) ? 0 : a.r - b.r;
 		a.g = (a.g < b.g) ? 0 : a.g - b.g;
 		a.b = (a.b < b.b) ? 0 : a.b - b.b;
-
+	
 		return a;
 	}
-
+	
 	RGB_8& operator *= (RGB_8& a, const RGB_8& b){
-
-		a.r *= b.r;
-		a.g *= b.g;
-		a.b *= b.b;
-
+		constexpr uint16_t max = UINT8_MAX;
+	
+		const uint16_t r = static_cast<uint16_t>(a.r) * b.r;
+		const uint16_t g = static_cast<uint16_t>(a.g) * b.g;
+		const uint16_t bl = static_cast<uint16_t>(a.b) * b.b;
+	
+		a.r = (r > max) ? max : static_cast<uint8_t>(r);
+		a.g = (g > max) ? max : static_cast<uint8_t>(g);
+		a.b = (bl > max) ? max : static_cast<uint8_t>(bl);
+	
 		return a;
 	}
-
+	
 	RGB_8& operator /= (RGB_8& a, const RGB_8& b){
-
-		a.r /= b.r;
-		a.g /= b.g;
-		a.b /= b.b;
-
+		constexpr uint8_t max = UINT8_MAX;
+	
+		a.r = (b.r == 0) ? max : static_cast<uint8_t>(a.r / b.r);
+		a.g = (b.g == 0) ? max : static_cast<uint8_t>(a.g / b.g);
+		a.b = (b.b == 0) ? max : static_cast<uint8_t>(a.b / b.b);
+	
 		return a;
 	}
-
+	
 	RGB_8& operator %= (RGB_8& a, const RGB_8& b){
-
-		a.r %= b.r;
-		a.g %= b.g;
-		a.b %= b.b;
-
+		constexpr uint8_t max = UINT8_MAX;
+	
+		a.r = (b.r == 0) ? max : static_cast<uint8_t>(a.r % b.r);
+		a.g = (b.g == 0) ? max : static_cast<uint8_t>(a.g % b.g);
+		a.b = (b.b == 0) ? max : static_cast<uint8_t>(a.b % b.b);
+	
 		return a;
 	}
-
+	
+	
 	RGB_8& operator += (RGB_8& a, const uint8_t& b){
-
-		const uint32_t max = siml::util::get_max_possible_values_in_bit_depth(8);
-
+		constexpr uint16_t max = UINT8_MAX;
+	
 		a.r = (a.r > max - b) ? max : a.r + b;
 		a.g = (a.g > max - b) ? max : a.g + b;
 		a.b = (a.b > max - b) ? max : a.b + b;
-
+	
 		return a;
 	}
-
+	
 	RGB_8& operator -= (RGB_8& a, const uint8_t& b){
-
 		a.r = (a.r < b) ? 0 : a.r - b;
 		a.g = (a.g < b) ? 0 : a.g - b;
 		a.b = (a.b < b) ? 0 : a.b - b;
-
+	
 		return a;
 	}
-
+	
 	RGB_8& operator *= (RGB_8& a, const uint8_t& b){
-
-		a.r *= b;
-		a.g *= b;
-		a.b *= b;
-
+		constexpr uint16_t max = UINT8_MAX;
+	
+		const uint16_t r = static_cast<uint16_t>(a.r) * b;
+		const uint16_t g = static_cast<uint16_t>(a.g) * b;
+		const uint16_t bl = static_cast<uint16_t>(a.b) * b;
+	
+		a.r = (r > max) ? max : static_cast<uint8_t>(r);
+		a.g = (g > max) ? max : static_cast<uint8_t>(g);
+		a.b = (bl > max) ? max : static_cast<uint8_t>(bl);
+	
 		return a;
 	}
-
+	
 	RGB_8& operator /= (RGB_8& a, const uint8_t& b){
-
-		a.r /= b;
-		a.g /= b;
-		a.b /= b;
-
+		constexpr uint8_t max = UINT8_MAX;
+	
+		a.r = (b == 0) ? max : static_cast<uint8_t>(a.r / b);
+		a.g = (b == 0) ? max : static_cast<uint8_t>(a.g / b);
+		a.b = (b == 0) ? max : static_cast<uint8_t>(a.b / b);
+	
 		return a;
 	}
-
+	
 	RGB_8& operator %= (RGB_8& a, const uint8_t& b){
-
-		a.r %= b;
-		a.g %= b;
-		a.b %= b;
-
+		constexpr uint8_t max = UINT8_MAX;
+	
+		a.r = (b == 0) ? max : static_cast<uint8_t>(a.r % b);
+		a.g = (b == 0) ? max : static_cast<uint8_t>(a.g % b);
+		a.b = (b == 0) ? max : static_cast<uint8_t>(a.b % b);
+	
 		return a;
 	}
-
+	
+	
 	RGB_8 operator + (const RGB_8& a, const RGB_8& b){
-
 		RGB_8 c = a;
 		c += b;
 		return c;
 	}
-
+	
 	RGB_8 operator - (const RGB_8& a, const RGB_8& b){
-
 		RGB_8 c = a;
 		c -= b;
 		return c;
 	}
-
+	
 	RGB_8 operator * (const RGB_8& a, const RGB_8& b){
-
 		RGB_8 c = a;
 		c *= b;
 		return c;
 	}
-
+	
 	RGB_8 operator / (const RGB_8& a, const RGB_8& b){
-
 		RGB_8 c = a;
 		c /= b;
 		return c;
 	}
-
+	
 	RGB_8 operator % (const RGB_8& a, const RGB_8& b){
-
 		RGB_8 c = a;
 		c %= b;
 		return c;
 	}
-
+	
+	
 	RGB_8 operator + (const RGB_8& a, const uint8_t& b){
-
 		RGB_8 c = a;
 		c += b;
 		return c;
 	}
-
+	
 	RGB_8 operator - (const RGB_8& a, const uint8_t& b){
-
 		RGB_8 c = a;
 		c -= b;
 		return c;
 	}
-
+	
 	RGB_8 operator * (const RGB_8& a, const uint8_t& b){
-
 		RGB_8 c = a;
 		c *= b;
 		return c;
 	}
-
+	
 	RGB_8 operator / (const RGB_8& a, const uint8_t& b){
-
 		RGB_8 c = a;
 		c /= b;
 		return c;
 	}
-
+	
 	RGB_8 operator % (const RGB_8& a, const uint8_t& b){
-
 		RGB_8 c = a;
 		c %= b;
 		return c;
 	}
-
-
+	
+	
 	RGB_8& RGB_8::operator = (uint8_t a){
-
 		r = a;
 		g = a;
 		b = a;
-
+	
 		return *this;
 	}
-
-
-
+	
+	
 	RGB_16& operator += (RGB_16& a, const RGB_16& b){
-
-		const uint32_t max = siml::util::get_max_possible_values_in_bit_depth(16);
-
+		constexpr uint32_t max = UINT16_MAX;
+	
 		a.r = (a.r > max - b.r) ? max : a.r + b.r;
 		a.g = (a.g > max - b.g) ? max : a.g + b.g;
 		a.b = (a.b > max - b.b) ? max : a.b + b.b;
-
+	
 		return a;
 	}
-
+	
 	RGB_16& operator -= (RGB_16& a, const RGB_16& b){
-
 		a.r = (a.r < b.r) ? 0 : a.r - b.r;
 		a.g = (a.g < b.g) ? 0 : a.g - b.g;
 		a.b = (a.b < b.b) ? 0 : a.b - b.b;
-
+	
 		return a;
 	}
-
+	
 	RGB_16& operator *= (RGB_16& a, const RGB_16& b){
-
-		a.r *= b.r;
-		a.g *= b.g;
-		a.b *= b.b;
-
+		constexpr uint32_t max = UINT16_MAX;
+	
+		const uint32_t r = static_cast<uint32_t>(a.r) * b.r;
+		const uint32_t g = static_cast<uint32_t>(a.g) * b.g;
+		const uint32_t bl = static_cast<uint32_t>(a.b) * b.b;
+	
+		a.r = (r > max) ? max : static_cast<uint16_t>(r);
+		a.g = (g > max) ? max : static_cast<uint16_t>(g);
+		a.b = (bl > max) ? max : static_cast<uint16_t>(bl);
+	
 		return a;
 	}
-
+	
 	RGB_16& operator /= (RGB_16& a, const RGB_16& b){
-
-		a.r /= b.r;
-		a.g /= b.g;
-		a.b /= b.b;
-
+		constexpr uint16_t max = UINT16_MAX;
+	
+		a.r = (b.r == 0) ? max : static_cast<uint16_t>(a.r / b.r);
+		a.g = (b.g == 0) ? max : static_cast<uint16_t>(a.g / b.g);
+		a.b = (b.b == 0) ? max : static_cast<uint16_t>(a.b / b.b);
+	
 		return a;
 	}
-
+	
 	RGB_16& operator %= (RGB_16& a, const RGB_16& b){
-
-		a.r %= b.r;
-		a.g %= b.g;
-		a.b %= b.b;
-
+		constexpr uint16_t max = UINT16_MAX;
+	
+		a.r = (b.r == 0) ? max : static_cast<uint16_t>(a.r % b.r);
+		a.g = (b.g == 0) ? max : static_cast<uint16_t>(a.g % b.g);
+		a.b = (b.b == 0) ? max : static_cast<uint16_t>(a.b % b.b);
+	
 		return a;
 	}
-
+	
+	
 	RGB_16& operator += (RGB_16& a, const RGB_8& b){
-
-		const uint32_t max = siml::util::get_max_possible_values_in_bit_depth(16);
-
+		constexpr uint32_t max = UINT16_MAX;
+	
 		a.r = (a.r > max - b.r) ? max : a.r + b.r;
 		a.g = (a.g > max - b.g) ? max : a.g + b.g;
 		a.b = (a.b > max - b.b) ? max : a.b + b.b;
-
+	
 		return a;
 	}
-
+	
 	RGB_16& operator -= (RGB_16& a, const RGB_8& b){
-
 		a.r = (a.r < b.r) ? 0 : a.r - b.r;
 		a.g = (a.g < b.g) ? 0 : a.g - b.g;
 		a.b = (a.b < b.b) ? 0 : a.b - b.b;
-
+	
 		return a;
 	}
-
+	
 	RGB_16& operator *= (RGB_16& a, const RGB_8& b){
-
-		a.r *= b.r;
-		a.g *= b.g;
-		a.b *= b.b;
-
+		constexpr uint32_t max = UINT16_MAX;
+	
+		const uint32_t r = static_cast<uint32_t>(a.r) * b.r;
+		const uint32_t g = static_cast<uint32_t>(a.g) * b.g;
+		const uint32_t bl = static_cast<uint32_t>(a.b) * b.b;
+	
+		a.r = (r > max) ? max : static_cast<uint16_t>(r);
+		a.g = (g > max) ? max : static_cast<uint16_t>(g);
+		a.b = (bl > max) ? max : static_cast<uint16_t>(bl);
+	
 		return a;
 	}
-
+	
 	RGB_16& operator /= (RGB_16& a, const RGB_8& b){
-
-		a.r /= b.r;
-		a.g /= b.g;
-		a.b /= b.b;
-
+		constexpr uint16_t max = UINT16_MAX;
+	
+		a.r = (b.r == 0) ? max : static_cast<uint16_t>(a.r / b.r);
+		a.g = (b.g == 0) ? max : static_cast<uint16_t>(a.g / b.g);
+		a.b = (b.b == 0) ? max : static_cast<uint16_t>(a.b / b.b);
+	
 		return a;
 	}
-
+	
 	RGB_16& operator %= (RGB_16& a, const RGB_8& b){
-
-		a.r %= b.r;
-		a.g %= b.g;
-		a.b %= b.b;
-
+		constexpr uint16_t max = UINT16_MAX;
+	
+		a.r = (b.r == 0) ? max : static_cast<uint16_t>(a.r % b.r);
+		a.g = (b.g == 0) ? max : static_cast<uint16_t>(a.g % b.g);
+		a.b = (b.b == 0) ? max : static_cast<uint16_t>(a.b % b.b);
+	
 		return a;
 	}
-
+	
+	
 	RGB_16& operator += (RGB_16& a, const uint16_t& b){
-
-		const uint32_t max = siml::util::get_max_possible_values_in_bit_depth(16);
-
+		constexpr uint32_t max = UINT16_MAX;
+	
 		a.r = (a.r > max - b) ? max : a.r + b;
 		a.g = (a.g > max - b) ? max : a.g + b;
 		a.b = (a.b > max - b) ? max : a.b + b;
-
+	
 		return a;
 	}
-
+	
 	RGB_16& operator -= (RGB_16& a, const uint16_t& b){
-
 		a.r = (a.r < b) ? 0 : a.r - b;
 		a.g = (a.g < b) ? 0 : a.g - b;
 		a.b = (a.b < b) ? 0 : a.b - b;
-
+	
 		return a;
 	}
-
+	
 	RGB_16& operator *= (RGB_16& a, const uint16_t& b){
-
-		a.r *= b;
-		a.g *= b;
-		a.b *= b;
-
+		constexpr uint32_t max = UINT16_MAX;
+	
+		const uint32_t r = static_cast<uint32_t>(a.r) * b;
+		const uint32_t g = static_cast<uint32_t>(a.g) * b;
+		const uint32_t bl = static_cast<uint32_t>(a.b) * b;
+	
+		a.r = (r > max) ? max : static_cast<uint16_t>(r);
+		a.g = (g > max) ? max : static_cast<uint16_t>(g);
+		a.b = (bl > max) ? max : static_cast<uint16_t>(bl);
+	
 		return a;
 	}
-
+	
 	RGB_16& operator /= (RGB_16& a, const uint16_t& b){
-
-		a.r /= b;
-		a.g /= b;
-		a.b /= b;
-
+		constexpr uint16_t max = UINT16_MAX;
+	
+		a.r = (b == 0) ? max : static_cast<uint16_t>(a.r / b);
+		a.g = (b == 0) ? max : static_cast<uint16_t>(a.g / b);
+		a.b = (b == 0) ? max : static_cast<uint16_t>(a.b / b);
+	
 		return a;
 	}
-
+	
 	RGB_16& operator %= (RGB_16& a, const uint16_t& b){
-
-		a.r %= b;
-		a.g %= b;
-		a.b %= b;
-
+		constexpr uint16_t max = UINT16_MAX;
+	
+		a.r = (b == 0) ? max : static_cast<uint16_t>(a.r % b);
+		a.g = (b == 0) ? max : static_cast<uint16_t>(a.g % b);
+		a.b = (b == 0) ? max : static_cast<uint16_t>(a.b % b);
+	
 		return a;
 	}
-
+	
+	
 	RGB_16 operator + (const RGB_16& a, const RGB_16& b){
-
 		RGB_16 c = a;
 		c += b;
 		return c;
 	}
-
+	
 	RGB_16 operator - (const RGB_16& a, const RGB_16& b){
-
 		RGB_16 c = a;
 		c -= b;
 		return c;
 	}
-
+	
 	RGB_16 operator * (const RGB_16& a, const RGB_16& b){
-
 		RGB_16 c = a;
 		c *= b;
 		return c;
 	}
-
+	
 	RGB_16 operator / (const RGB_16& a, const RGB_16& b){
-
 		RGB_16 c = a;
 		c /= b;
 		return c;
 	}
-
+	
 	RGB_16 operator % (const RGB_16& a, const RGB_16& b){
-
 		RGB_16 c = a;
 		c %= b;
 		return c;
 	}
-
+	
+	
 	RGB_16 operator + (const RGB_16& a, const RGB_8& b){
-
 		RGB_16 c = a;
 		c += b;
 		return c;
 	}
-
+	
 	RGB_16 operator - (const RGB_16& a, const RGB_8& b){
-
 		RGB_16 c = a;
 		c -= b;
 		return c;
 	}
-
+	
 	RGB_16 operator * (const RGB_16& a, const RGB_8& b){
-
 		RGB_16 c = a;
 		c *= b;
 		return c;
 	}
-
+	
 	RGB_16 operator / (const RGB_16& a, const RGB_8& b){
-
 		RGB_16 c = a;
 		c /= b;
 		return c;
 	}
-
+	
 	RGB_16 operator % (const RGB_16& a, const RGB_8& b){
-
 		RGB_16 c = a;
 		c %= b;
 		return c;
 	}
-
+	
+	
 	RGB_16 operator + (const RGB_16& a, const uint16_t& b){
-
 		RGB_16 c = a;
 		c += b;
 		return c;
 	}
-
+	
 	RGB_16 operator - (const RGB_16& a, const uint16_t& b){
-
 		RGB_16 c = a;
 		c -= b;
 		return c;
 	}
-
+	
 	RGB_16 operator * (const RGB_16& a, const uint16_t& b){
-
 		RGB_16 c = a;
 		c *= b;
 		return c;
 	}
-
+	
 	RGB_16 operator / (const RGB_16& a, const uint16_t& b){
-
 		RGB_16 c = a;
 		c /= b;
 		return c;
 	}
-
+	
 	RGB_16 operator % (const RGB_16& a, const uint16_t& b){
-
 		RGB_16 c = a;
 		c %= b;
 		return c;
 	}
-
+	
+	
 	RGB_16& RGB_16::operator = (uint16_t a){
-
 		r = a;
 		g = a;
 		b = a;
-
+	
 		return *this;
 	}
-
+	
 	RGB_16& RGB_16::operator = (uint8_t a){
-
 		r = a;
 		g = a;
 		b = a;
-
+	
 		return *this;
 	}
-
-
+	
+	
 	RGB_32& operator += (RGB_32& a, const RGB_32& b){
-
-		const uint32_t max = siml::util::get_max_possible_values_in_bit_depth(32);
-
-		a.r = (a.r > max - b.r) ? max : a.r + b.r;
-		a.g = (a.g > max - b.g) ? max : a.g + b.g;
-		a.b = (a.b > max - b.b) ? max : a.b + b.b;
-
+		constexpr uint64_t max = UINT32_MAX;
+	
+		a.r = (static_cast<uint64_t>(a.r) > max - b.r)
+			? UINT32_MAX
+			: static_cast<uint32_t>(a.r + b.r);
+	
+		a.g = (static_cast<uint64_t>(a.g) > max - b.g)
+			? UINT32_MAX
+			: static_cast<uint32_t>(a.g + b.g);
+	
+		a.b = (static_cast<uint64_t>(a.b) > max - b.b)
+			? UINT32_MAX
+			: static_cast<uint32_t>(a.b + b.b);
+	
 		return a;
 	}
-
+	
 	RGB_32& operator -= (RGB_32& a, const RGB_32& b){
-
 		a.r = (a.r < b.r) ? 0 : a.r - b.r;
 		a.g = (a.g < b.g) ? 0 : a.g - b.g;
 		a.b = (a.b < b.b) ? 0 : a.b - b.b;
-
+	
 		return a;
 	}
-
+	
 	RGB_32& operator *= (RGB_32& a, const RGB_32& b){
-
-		a.r *= b.r;
-		a.g *= b.g;
-		a.b *= b.b;
-
+		constexpr uint64_t max = UINT32_MAX;
+	
+		const uint64_t r = static_cast<uint64_t>(a.r) * b.r;
+		const uint64_t g = static_cast<uint64_t>(a.g) * b.g;
+		const uint64_t bl = static_cast<uint64_t>(a.b) * b.b;
+	
+		a.r = (r > max) ? UINT32_MAX : static_cast<uint32_t>(r);
+		a.g = (g > max) ? UINT32_MAX : static_cast<uint32_t>(g);
+		a.b = (bl > max) ? UINT32_MAX : static_cast<uint32_t>(bl);
+	
 		return a;
 	}
-
+	
 	RGB_32& operator /= (RGB_32& a, const RGB_32& b){
-
-		a.r /= b.r;
-		a.g /= b.g;
-		a.b /= b.b;
-
+		constexpr uint32_t max = UINT32_MAX;
+	
+		a.r = (b.r == 0) ? max : static_cast<uint32_t>(a.r / b.r);
+		a.g = (b.g == 0) ? max : static_cast<uint32_t>(a.g / b.g);
+		a.b = (b.b == 0) ? max : static_cast<uint32_t>(a.b / b.b);
+	
 		return a;
 	}
-
+	
 	RGB_32& operator %= (RGB_32& a, const RGB_32& b){
-
-		a.r %= b.r;
-		a.g %= b.g;
-		a.b %= b.b;
-
+		constexpr uint32_t max = UINT32_MAX;
+	
+		a.r = (b.r == 0) ? max : static_cast<uint32_t>(a.r % b.r);
+		a.g = (b.g == 0) ? max : static_cast<uint32_t>(a.g % b.g);
+		a.b = (b.b == 0) ? max : static_cast<uint32_t>(a.b % b.b);
+	
 		return a;
 	}
-
+	
+	
 	RGB_32& operator += (RGB_32& a, const RGB_16& b){
-
-		const uint32_t max = siml::util::get_max_possible_values_in_bit_depth(32);
-
-		a.r = (a.r > max - b.r) ? max : a.r + b.r;
-		a.g = (a.g > max - b.g) ? max : a.g + b.g;
-		a.b = (a.b > max - b.b) ? max : a.b + b.b;
-
+		constexpr uint64_t max = UINT32_MAX;
+	
+		a.r = (static_cast<uint64_t>(a.r) > max - b.r)
+			? UINT32_MAX
+			: static_cast<uint32_t>(a.r + b.r);
+	
+		a.g = (static_cast<uint64_t>(a.g) > max - b.g)
+			? UINT32_MAX
+			: static_cast<uint32_t>(a.g + b.g);
+	
+		a.b = (static_cast<uint64_t>(a.b) > max - b.b)
+			? UINT32_MAX
+			: static_cast<uint32_t>(a.b + b.b);
+	
 		return a;
 	}
-
+	
 	RGB_32& operator -= (RGB_32& a, const RGB_16& b){
-
 		a.r = (a.r < b.r) ? 0 : a.r - b.r;
 		a.g = (a.g < b.g) ? 0 : a.g - b.g;
 		a.b = (a.b < b.b) ? 0 : a.b - b.b;
-
+	
 		return a;
 	}
-
+	
 	RGB_32& operator *= (RGB_32& a, const RGB_16& b){
-
-		a.r *= b.r;
-		a.g *= b.g;
-		a.b *= b.b;
-
+		constexpr uint64_t max = UINT32_MAX;
+	
+		const uint64_t r = static_cast<uint64_t>(a.r) * b.r;
+		const uint64_t g = static_cast<uint64_t>(a.g) * b.g;
+		const uint64_t bl = static_cast<uint64_t>(a.b) * b.b;
+	
+		a.r = (r > max) ? UINT32_MAX : static_cast<uint32_t>(r);
+		a.g = (g > max) ? UINT32_MAX : static_cast<uint32_t>(g);
+		a.b = (bl > max) ? UINT32_MAX : static_cast<uint32_t>(bl);
+	
 		return a;
 	}
-
+	
 	RGB_32& operator /= (RGB_32& a, const RGB_16& b){
-
-		a.r /= b.r;
-		a.g /= b.g;
-		a.b /= b.b;
-
+		constexpr uint32_t max = UINT32_MAX;
+	
+		a.r = (b.r == 0) ? max : static_cast<uint32_t>(a.r / b.r);
+		a.g = (b.g == 0) ? max : static_cast<uint32_t>(a.g / b.g);
+		a.b = (b.b == 0) ? max : static_cast<uint32_t>(a.b / b.b);
+	
 		return a;
 	}
-
+	
 	RGB_32& operator %= (RGB_32& a, const RGB_16& b){
-
-		a.r %= b.r;
-		a.g %= b.g;
-		a.b %= b.b;
-
+		constexpr uint32_t max = UINT32_MAX;
+	
+		a.r = (b.r == 0) ? max : static_cast<uint32_t>(a.r % b.r);
+		a.g = (b.g == 0) ? max : static_cast<uint32_t>(a.g % b.g);
+		a.b = (b.b == 0) ? max : static_cast<uint32_t>(a.b % b.b);
+	
 		return a;
 	}
-
+	
+	
 	RGB_32& operator += (RGB_32& a, const RGB_8& b){
-
-		const uint32_t max = siml::util::get_max_possible_values_in_bit_depth(32);
-
-		a.r = (a.r > max - b.r) ? max : a.r + b.r;
-		a.g = (a.g > max - b.g) ? max : a.g + b.g;
-		a.b = (a.b > max - b.b) ? max : a.b + b.b;
-
+		constexpr uint64_t max = UINT32_MAX;
+	
+		a.r = (static_cast<uint64_t>(a.r) > max - b.r)
+			? UINT32_MAX
+			: static_cast<uint32_t>(a.r + b.r);
+	
+		a.g = (static_cast<uint64_t>(a.g) > max - b.g)
+			? UINT32_MAX
+			: static_cast<uint32_t>(a.g + b.g);
+	
+		a.b = (static_cast<uint64_t>(a.b) > max - b.b)
+			? UINT32_MAX
+			: static_cast<uint32_t>(a.b + b.b);
+	
 		return a;
 	}
-
+	
 	RGB_32& operator -= (RGB_32& a, const RGB_8& b){
-
 		a.r = (a.r < b.r) ? 0 : a.r - b.r;
 		a.g = (a.g < b.g) ? 0 : a.g - b.g;
 		a.b = (a.b < b.b) ? 0 : a.b - b.b;
-
+	
 		return a;
 	}
-
+	
 	RGB_32& operator *= (RGB_32& a, const RGB_8& b){
-
-		a.r *= b.r;
-		a.g *= b.g;
-		a.b *= b.b;
-
+		constexpr uint64_t max = UINT32_MAX;
+	
+		const uint64_t r = static_cast<uint64_t>(a.r) * b.r;
+		const uint64_t g = static_cast<uint64_t>(a.g) * b.g;
+		const uint64_t bl = static_cast<uint64_t>(a.b) * b.b;
+	
+		a.r = (r > max) ? UINT32_MAX : static_cast<uint32_t>(r);
+		a.g = (g > max) ? UINT32_MAX : static_cast<uint32_t>(g);
+		a.b = (bl > max) ? UINT32_MAX : static_cast<uint32_t>(bl);
+	
 		return a;
 	}
-
+	
 	RGB_32& operator /= (RGB_32& a, const RGB_8& b){
-
-		a.r /= b.r;
-		a.g /= b.g;
-		a.b /= b.b;
-
+		constexpr uint32_t max = UINT32_MAX;
+	
+		a.r = (b.r == 0) ? max : static_cast<uint32_t>(a.r / b.r);
+		a.g = (b.g == 0) ? max : static_cast<uint32_t>(a.g / b.g);
+		a.b = (b.b == 0) ? max : static_cast<uint32_t>(a.b / b.b);
+	
 		return a;
 	}
-
+	
 	RGB_32& operator %= (RGB_32& a, const RGB_8& b){
-
-		a.r %= b.r;
-		a.g %= b.g;
-		a.b %= b.b;
-
+		constexpr uint32_t max = UINT32_MAX;
+	
+		a.r = (b.r == 0) ? max : static_cast<uint32_t>(a.r % b.r);
+		a.g = (b.g == 0) ? max : static_cast<uint32_t>(a.g % b.g);
+		a.b = (b.b == 0) ? max : static_cast<uint32_t>(a.b % b.b);
+	
 		return a;
 	}
-
+	
+	
 	RGB_32& operator += (RGB_32& a, const uint32_t& b){
-
-		const uint32_t max = siml::util::get_max_possible_values_in_bit_depth(32);
-
-		a.r = (a.r > max - b) ? max : a.r + b;
-		a.g = (a.g > max - b) ? max : a.g + b;
-		a.b = (a.b > max - b) ? max : a.b + b;
-
+		constexpr uint64_t max = UINT32_MAX;
+	
+		a.r = (static_cast<uint64_t>(a.r) > max - b)
+			? UINT32_MAX
+			: static_cast<uint32_t>(a.r + b);
+	
+		a.g = (static_cast<uint64_t>(a.g) > max - b)
+			? UINT32_MAX
+			: static_cast<uint32_t>(a.g + b);
+	
+		a.b = (static_cast<uint64_t>(a.b) > max - b)
+			? UINT32_MAX
+			: static_cast<uint32_t>(a.b + b);
+	
 		return a;
 	}
-
+	
 	RGB_32& operator -= (RGB_32& a, const uint32_t& b){
-
 		a.r = (a.r < b) ? 0 : a.r - b;
 		a.g = (a.g < b) ? 0 : a.g - b;
 		a.b = (a.b < b) ? 0 : a.b - b;
-
+	
 		return a;
 	}
-
+	
 	RGB_32& operator *= (RGB_32& a, const uint32_t& b){
-
-		a.r *= b;
-		a.g *= b;
-		a.b *= b;
-
+		constexpr uint64_t max = UINT32_MAX;
+	
+		const uint64_t r = static_cast<uint64_t>(a.r) * b;
+		const uint64_t g = static_cast<uint64_t>(a.g) * b;
+		const uint64_t bl = static_cast<uint64_t>(a.b) * b;
+	
+		a.r = (r > max) ? UINT32_MAX : static_cast<uint32_t>(r);
+		a.g = (g > max) ? UINT32_MAX : static_cast<uint32_t>(g);
+		a.b = (bl > max) ? UINT32_MAX : static_cast<uint32_t>(bl);
+	
 		return a;
 	}
-
+	
 	RGB_32& operator /= (RGB_32& a, const uint32_t& b){
-
-		a.r /= b;
-		a.g /= b;
-		a.b /= b;
-
+		constexpr uint32_t max = UINT32_MAX;
+	
+		a.r = (b == 0) ? max : static_cast<uint32_t>(a.r / b);
+		a.g = (b == 0) ? max : static_cast<uint32_t>(a.g / b);
+		a.b = (b == 0) ? max : static_cast<uint32_t>(a.b / b);
+	
 		return a;
 	}
-
+	
 	RGB_32& operator %= (RGB_32& a, const uint32_t& b){
-
-		a.r %= b;
-		a.g %= b;
-		a.b %= b;
-
+		constexpr uint32_t max = UINT32_MAX;
+	
+		a.r = (b == 0) ? max : static_cast<uint32_t>(a.r % b);
+		a.g = (b == 0) ? max : static_cast<uint32_t>(a.g % b);
+		a.b = (b == 0) ? max : static_cast<uint32_t>(a.b % b);
+	
 		return a;
 	}
-
+	
+	
 	RGB_32 operator + (const RGB_32& a, const RGB_32& b){
-
 		RGB_32 c = a;
 		c += b;
 		return c;
 	}
-
+	
 	RGB_32 operator - (const RGB_32& a, const RGB_32& b){
-
 		RGB_32 c = a;
 		c -= b;
 		return c;
 	}
-
+	
 	RGB_32 operator * (const RGB_32& a, const RGB_32& b){
-
 		RGB_32 c = a;
 		c *= b;
 		return c;
 	}
-
+	
 	RGB_32 operator / (const RGB_32& a, const RGB_32& b){
-
 		RGB_32 c = a;
 		c /= b;
 		return c;
 	}
-
+	
 	RGB_32 operator % (const RGB_32& a, const RGB_32& b){
-
 		RGB_32 c = a;
 		c %= b;
 		return c;
 	}
-
+	
+	
 	RGB_32 operator + (const RGB_32& a, const RGB_16& b){
-
 		RGB_32 c = a;
 		c += b;
 		return c;
 	}
-
+	
 	RGB_32 operator - (const RGB_32& a, const RGB_16& b){
-
 		RGB_32 c = a;
 		c -= b;
 		return c;
 	}
-
+	
 	RGB_32 operator * (const RGB_32& a, const RGB_16& b){
-
 		RGB_32 c = a;
 		c *= b;
 		return c;
 	}
-
+	
 	RGB_32 operator / (const RGB_32& a, const RGB_16& b){
-
 		RGB_32 c = a;
 		c /= b;
 		return c;
 	}
-
+	
 	RGB_32 operator % (const RGB_32& a, const RGB_16& b){
-
 		RGB_32 c = a;
 		c %= b;
 		return c;
 	}
-
+	
+	
 	RGB_32 operator + (const RGB_32& a, const RGB_8& b){
-
 		RGB_32 c = a;
 		c += b;
 		return c;
 	}
-
+	
 	RGB_32 operator - (const RGB_32& a, const RGB_8& b){
-
 		RGB_32 c = a;
 		c -= b;
 		return c;
 	}
-
+	
 	RGB_32 operator * (const RGB_32& a, const RGB_8& b){
-
 		RGB_32 c = a;
 		c *= b;
 		return c;
 	}
-
+	
 	RGB_32 operator / (const RGB_32& a, const RGB_8& b){
-
 		RGB_32 c = a;
 		c /= b;
 		return c;
 	}
-
+	
 	RGB_32 operator % (const RGB_32& a, const RGB_8& b){
-
 		RGB_32 c = a;
 		c %= b;
 		return c;
 	}
-
+	
+	
 	RGB_32 operator + (const RGB_32& a, const uint32_t& b){
-
 		RGB_32 c = a;
 		c += b;
 		return c;
 	}
-
+	
 	RGB_32 operator - (const RGB_32& a, const uint32_t& b){
-
 		RGB_32 c = a;
 		c -= b;
 		return c;
 	}
-
+	
 	RGB_32 operator * (const RGB_32& a, const uint32_t& b){
-
 		RGB_32 c = a;
 		c *= b;
 		return c;
 	}
-
+	
 	RGB_32 operator / (const RGB_32& a, const uint32_t& b){
-
 		RGB_32 c = a;
 		c /= b;
 		return c;
 	}
-
+	
 	RGB_32 operator % (const RGB_32& a, const uint32_t& b){
-
 		RGB_32 c = a;
 		c %= b;
 		return c;
 	}
-
-
-
+	
+	
 	RGB_32& RGB_32::operator = (uint16_t a){
-
 		r = a;
 		g = a;
 		b = a;
-
+	
 		return *this;
 	}
-
+	
 	RGB_32& RGB_32::operator = (uint8_t a){
-
 		r = a;
 		g = a;
 		b = a;
-
+	
 		return *this;
 	}
-
+	
 	RGB_32& RGB_32::operator = (uint32_t a){
-
 		r = a;
 		g = a;
 		b = a;
-
+	
 		return *this;
 	}
-
-	// it's recommended to not touch these overloads unless you know what you are doing as even a minor change can brick the whole library.
 
 }

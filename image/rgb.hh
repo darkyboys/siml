@@ -171,6 +171,8 @@ namespace siml {
     };
 
 
+
+
     // RGB_8
 	RGB_8& operator += (RGB_8& a, const RGB_8& b);
 	RGB_8& operator -= (RGB_8& a, const RGB_8& b);
