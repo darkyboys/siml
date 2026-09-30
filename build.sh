@@ -14,6 +14,7 @@ echo ""
 # Effects
 echo "Making the effects!"
 clang++ -O3 src/effects/brightness.cc -c -o siml/brightness.o &&\
+clang++ -O3 src/effects/precision_brightness.cc -c -o siml/precision_brightness.o &&\
 clang++ -O3 src/effects/grayscale.cc -c -o siml/grayscale.o &&\
 echo ""
 

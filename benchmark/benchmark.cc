@@ -444,4 +444,26 @@ int main()
         },
         1000
     );
+
+    benchmark(
+        "precision_brightness",
+        [&]() {
+            siml::effect::precision_brightness(
+                image,
+                10.0
+            );
+        },
+        1000
+    );
+
+    benchmark(
+        "precision_brightness - Negative",
+        [&]() {
+            siml::effect::precision_brightness(
+                image,
+                -10.0
+            );
+        },
+        1000
+    );
 }

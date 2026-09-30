@@ -128,16 +128,78 @@ express Statement of Purpose.
 // A Library specifically made to be fully STL Compatible and extremely easy to use with full transparency.
 // The entire library is cuvered under the CC0 v1 Universal License.
 
+#ifndef SIML_EFFECT_PRECISION_BRIGHTNESS
+#define SIML_EFFECT_PRECISION_BRIGHTNESS
 
-#ifndef SIML
-#define SIML 1
+#include "../../effects/precision_brightness.hh"
+#include "../../siml.hh"
+#include <cstdint>
+#include <stdexcept>
+#include <iostream>
 
-#include "image/rgb.hh"
-#include "image/image.hh"
-#include "util.hh"
-#include "image/imagereader.hh"
-#include "effects/brightness.hh"
-#include "effects/precision_brightness.hh"
-#include "effects/grayscale.hh"
+namespace siml::effect {
+
+    void precision_brightness(
+        Image& img,
+        float value
+    ){
+        if ((int)img.bitdepth <= 8){
+
+            // std::cout << (int)incr << "\nNPercent: "<<util::normalize_percentage(value)<<'\n';
+
+            if (value < 0.0){ // Negative
+                uint8_t incr = (util::normalize_percentage(value) * -1.0) * UINT8_MAX;
+                // std::cout << (int)incr << "\nNPercent: "<<util::normalize_percentage(value)<<'\n';
+                for (std::size_t i = 0;i < img.total_pixels;i++)
+                    img.pixels_8bit[i] -= incr;
+            }
+            else{
+                uint8_t incr = util::normalize_percentage(value) * UINT8_MAX;
+                for (std::size_t i = 0;i < img.total_pixels;i++)
+                    img.pixels_8bit[i] += incr;
+            }
+            
+
+        }
+
+        else if ((int)img.bitdepth <= 16){
+            
+            if (value < 0.0){
+                uint16_t incr = (util::normalize_percentage(value) * -1.0)  * UINT16_MAX;
+                for (std::size_t i = 0;i < img.total_pixels;i++)
+                    img.pixels_16bit[i] -= incr;
+            }
+            else{
+                uint16_t incr = util::normalize_percentage(value)  * UINT16_MAX;
+                for (std::size_t i = 0;i < img.total_pixels;i++)
+                    img.pixels_16bit[i] += incr;
+            }
+                
+
+        }
+
+        else if ((int)img.bitdepth <= 32){
+            
+            if (value < 0.0){
+                uint32_t incr = (util::normalize_percentage(value) * -1.0)  * UINT32_MAX;
+                for (std::size_t i = 0;i < img.total_pixels;i++)
+                    img.pixels_32bit[i] -= incr;
+            }
+            else{
+                uint32_t incr = util::normalize_percentage(value)  * UINT32_MAX;
+                for (std::size_t i = 0;i < img.total_pixels;i++)
+                    img.pixels_32bit[i] += incr;
+            }
+
+        }
+
+        else {
+            
+            throw std::runtime_error("SIML Error From siml::effect::precision_brightness(): Invalid bit depth found in the given image.\n");            
+        
+        }
+    }
+
+}
 
 #endif
