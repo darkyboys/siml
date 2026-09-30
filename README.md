@@ -117,7 +117,7 @@ Effects operate directly on the supplied `Image`.
 
 ---
 
-## Brightness (Depreciated)
+## Brightness (Deprecated)
 
 Currently, SIML provides a brightness effect.
 The brightness effect allows us to change the brightness of the image.
@@ -208,7 +208,7 @@ siml::effect::grayscale(
 
 ## Precision Brightness
 
-SIML provides a precision brightness effect which allows floating point precision to control the overall brightness of the image, It's also very optimized and runs faster than the normal brightness as well (It's always recommended to use precision brightness over the brightness effect. Brightness at this point is just an old artiface which is kept there for compatibility. Though it will still work , Just slower and more uglier), This effect also modernised every other effect because after this , All the other effects were shifted to the floating point precision. And do not use Units either. It can directly take both the positive and negative values at the same time!
+SIML provides a precision brightness effect which allows floating point precision to control the overall brightness of the image, It's also very optimized and runs faster than the normal brightness as well (It's always recommended to use precision brightness over the brightness effect. Brightness at this point is just an old artifact which is kept there for compatibility. Though it will still work , Just slower and more uglier), This effect also modernised every other effect because after this , All the other effects were shifted to the floating point precision. And do not use Units either. It can directly take both the positive and negative values at the same time!
 
 ### Syntax
 ```cpp
