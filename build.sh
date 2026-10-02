@@ -18,6 +18,10 @@ clang++ -O3 src/effects/brightness.cc -c -o siml/brightness.o &&\
 clang++ -O3 src/effects/precision_brightness.cc -c -o siml/precision_brightness.o &&\
 clang++ -O3 src/effects/grayscale.cc -c -o siml/grayscale.o &&\
 clang++ -O3 src/effects/invert.cc -c -o siml/invert.o &&\
+clang++ -O3 src/effects/temperature.cc -c -o siml/temperature.o &&\
+clang++ -O3 src/effects/channel_blue_intensity.cc -c -o siml/channel_blue_intensity.o &&\
+clang++ -O3 src/effects/channel_red_intensity.cc -c -o siml/channel_red_intensity.o &&\
+clang++ -O3 src/effects/channel_green_intensity.cc -c -o siml/channel_green_intensity.o &&\
 echo ""
 
 

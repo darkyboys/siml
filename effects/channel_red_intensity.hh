@@ -128,22 +128,20 @@ express Statement of Purpose.
 // A Library specifically made to be fully STL Compatible and extremely easy to use with full transparency.
 // The entire library is cuvered under the CC0 v1 Universal License.
 
+#ifndef SIML_EFFECT_CHANNEL_RED
+#define SIML_EFFECT_CHANNEL_RED
 
-#ifndef SIML
-#define SIML 1
+#include "../util.hh"
+#include "../image/image.hh"
+#include <cstdint>
 
-#include "image/rgb.hh"
-#include "image/image.hh"
-#include "util.hh"
-#include "image/imagereader.hh"
-#include "effects/brightness.hh"
-#include "effects/precision_brightness.hh"
-#include "effects/grayscale.hh"
-#include "effects/invert.hh"
-#include "effects/temperature.hh"
-#include "effects/channel_blue_intensity.hh"
-#include "effects/channel_red_intensity.hh"
-#include "effects/channel_green_intensity.hh"
+namespace siml::effect {
 
+    void channel_red_intensity(
+        Image& img,
+        double value
+    );
+
+}
 
 #endif

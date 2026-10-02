@@ -129,21 +129,152 @@ express Statement of Purpose.
 // The entire library is cuvered under the CC0 v1 Universal License.
 
 
-#ifndef SIML
-#define SIML 1
+#include "../../effects/channel_red_intensity.hh"
+#include "../../siml.hh"
+#include <cstdint>
+#include <stdexcept>
+#include <iostream>
 
-#include "image/rgb.hh"
-#include "image/image.hh"
-#include "util.hh"
-#include "image/imagereader.hh"
-#include "effects/brightness.hh"
-#include "effects/precision_brightness.hh"
-#include "effects/grayscale.hh"
-#include "effects/invert.hh"
-#include "effects/temperature.hh"
-#include "effects/channel_blue_intensity.hh"
-#include "effects/channel_red_intensity.hh"
-#include "effects/channel_green_intensity.hh"
+namespace siml::effect {
 
+    void channel_red_intensity(
+        Image& img,
+        double value
+    ){
+        const double normalized = util::normalize_percentage(value);
+        const uint32_t max_value =
+            util::get_max_possible_values_in_bit_depth(img.bitdepth);
 
-#endif
+        if (normalized < 0.0) {
+
+            if (img.bitdepth <= 8) {
+
+                const uint8_t change =
+                    static_cast<uint8_t>(
+                        (-normalized) * static_cast<double>(max_value)
+                    );
+
+                for (std::size_t i = 0; i < img.total_pixels; ++i) {
+
+                    util::subtract_pixel(
+                        img.pixels_8bit[i],
+                        img.bitdepth,
+                        change,
+                        util::Channel::RED
+                    );
+                }
+
+            }
+            else if (img.bitdepth <= 16) {
+
+                const uint16_t change =
+                    static_cast<uint16_t>(
+                        (-normalized) * static_cast<double>(max_value)
+                    );
+
+                for (std::size_t i = 0; i < img.total_pixels; ++i) {
+
+                    util::subtract_pixel(
+                        img.pixels_16bit[i],
+                        img.bitdepth,
+                        change,
+                        util::Channel::RED
+                    );
+                }
+
+            }
+            else if (img.bitdepth <= 32) {
+
+                const uint32_t change =
+                    static_cast<uint32_t>(
+                        (-normalized) * static_cast<double>(max_value)
+                    );
+
+                for (std::size_t i = 0; i < img.total_pixels; ++i) {
+
+                    util::subtract_pixel(
+                        img.pixels_32bit[i],
+                        img.bitdepth,
+                        change,
+                        util::Channel::RED
+                    );
+                }
+
+            }
+            else {
+
+                throw std::runtime_error(
+                    "SIML Error From siml::effect::channel_red_intensity(): "
+                    "Invalid bit depth found in the given image.\n"
+                );
+
+            }
+        }
+        else if (normalized > 0.0) {
+
+            if (img.bitdepth <= 8) {
+
+                const uint8_t change =
+                    static_cast<uint8_t>(
+                        normalized * static_cast<double>(max_value)
+                    );
+
+                for (std::size_t i = 0; i < img.total_pixels; ++i) {
+
+                    util::add_pixel(
+                        img.pixels_8bit[i],
+                        img.bitdepth,
+                        change,
+                        util::Channel::RED
+                    );
+                }
+
+            }
+            else if (img.bitdepth <= 16) {
+
+                const uint16_t change =
+                    static_cast<uint16_t>(
+                        normalized * static_cast<double>(max_value)
+                    );
+
+                for (std::size_t i = 0; i < img.total_pixels; ++i) {
+
+                    util::add_pixel(
+                        img.pixels_16bit[i],
+                        img.bitdepth,
+                        change,
+                        util::Channel::RED
+                    );
+                }
+
+            }
+            else if (img.bitdepth <= 32) {
+
+                const uint32_t change =
+                    static_cast<uint32_t>(
+                        normalized * static_cast<double>(max_value)
+                    );
+
+                for (std::size_t i = 0; i < img.total_pixels; ++i) {
+
+                    util::add_pixel(
+                        img.pixels_32bit[i],
+                        img.bitdepth,
+                        change,
+                        util::Channel::RED
+                    );
+                }
+
+            }
+            else {
+
+                throw std::runtime_error(
+                    "SIML Error From siml::effect::channel_red_intensity(): "
+                    "Invalid bit depth found in the given image.\n"
+                );
+
+            }
+        }
+    }
+
+}

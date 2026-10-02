@@ -142,7 +142,7 @@ namespace siml::util {
 
         if (val < -1.0 or val > 1.0){
 
-            throw std::runtime_error("SIML Error, From siml::util::check_percentage(): Invalid percentage entered " + std::to_string((double)percentage) + ", A percentage value must be inbetween 0 to 100.\n");
+            throw std::runtime_error("SIML Error, From siml::util::normalize_percentage(): Invalid percentage entered " + std::to_string((double)percentage) + ", A percentage value must be inbetween 0 to 100.\n");
 
         }
 

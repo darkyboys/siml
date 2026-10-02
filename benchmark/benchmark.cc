@@ -476,4 +476,92 @@ int main()
         },
         1000
     );
+
+    benchmark(
+        "temperature",
+        [&]() {
+            siml::effect::temperature(
+                image,
+                10
+            );
+        },
+        1000
+    );
+
+    benchmark(
+        "temperature - decrement",
+        [&]() {
+            siml::effect::temperature(
+                image,
+                -10
+            );
+        },
+        1000
+    );
+
+    benchmark(
+        "channel_blue_intensity",
+        [&]() {
+            siml::effect::channel_blue_intensity(
+                image,
+                10
+            );
+        },
+        1000
+    );
+
+    benchmark(
+        "channel_blue_intensity - decrement",
+        [&]() {
+            siml::effect::channel_blue_intensity(
+                image,
+                -10
+            );
+        },
+        1000
+    );
+
+    benchmark(
+        "channel_red_intensity",
+        [&]() {
+            siml::effect::channel_red_intensity(
+                image,
+                10
+            );
+        },
+        1000
+    );
+
+    benchmark(
+        "channel_red_intensity - decrement",
+        [&]() {
+            siml::effect::channel_red_intensity(
+                image,
+                -10
+            );
+        },
+        1000
+    );
+
+    benchmark(
+        "channel_green_intensity",
+        [&]() {
+            siml::effect::channel_green_intensity(
+                image,
+                10
+            );
+        },
+        1000
+    );
+
+    benchmark(
+        "channel_green_intensity - decrement",
+        [&]() {
+            siml::effect::channel_green_intensity(
+                image,
+                -10
+            );
+        },
+        1000
+    );
 }

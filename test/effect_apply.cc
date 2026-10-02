@@ -8,6 +8,12 @@ int main(){
     // siml::effect::precision_brightness(image, -10);
     siml::effect::invert(image);
     siml::effect::invert(image);
+    // siml::effect::temperature(image, 10);
+    // siml::effect::channel_blue_intensity(image, -10);
+    // siml::effect::channel_red_intensity(image, 10);
+
+    siml::effect::temperature(image, -10);
+
 
     // siml::effect::grayscale(image);
     // siml::effect::brightness(image, 50, siml::NEGATIVE_PIXEL);

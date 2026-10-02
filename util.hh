@@ -131,6 +131,7 @@ express Statement of Purpose.
 #ifndef SIML_UTIL
 #define SIML_UTIL
 
+#include "image/rgb.hh"
 #include <atomic>
 #include <cstdint>
 
@@ -160,6 +161,548 @@ namespace siml::util {
         unsigned char bitdepth
 
     ) noexcept;
+
+
+
+    // Pixel arithematic starts from here
+    
+    enum Channel{
+        RED,
+        BLUE,
+        GREEN,
+        ALL
+    };
+
+    inline void set_pixel(
+
+        RGB_8& px,
+        unsigned char bitdepth,
+        int64_t value,
+        Channel channel = ALL
+
+    ){
+
+        if (bitdepth == 0)
+            return;
+
+        const uint32_t max =
+            bitdepth >= 8
+                ? 255u
+                : ((1u << bitdepth) - 1u);
+
+        const uint8_t v =
+            value <= 0
+                ? uint8_t{0}
+                : static_cast<uint64_t>(value) >= max
+                    ? static_cast<uint8_t>(max)
+                    : static_cast<uint8_t>(value);
+
+        if (channel == RED) {
+            if (px.r != v)
+                px.r = v;
+        }
+        else if (channel == GREEN) {
+            if (px.g != v)
+                px.g = v;
+        }
+        else if (channel == BLUE) {
+            if (px.b != v)
+                px.b = v;
+        }
+        else if (channel == ALL) {
+            if (px.r != v)
+                px.r = v;
+
+            if (px.g != v)
+                px.g = v;
+
+            if (px.b != v)
+                px.b = v;
+        }
+    }
+
+
+    inline void set_pixel(
+
+        RGB_16& px,
+        unsigned char bitdepth,
+        int64_t value,
+        Channel channel = ALL
+
+    ){
+
+        if (bitdepth == 0)
+            return;
+
+        const uint32_t max =
+            bitdepth >= 16
+                ? 65535u
+                : ((1u << bitdepth) - 1u);
+
+        const uint16_t v =
+            value <= 0
+                ? uint16_t{0}
+                : static_cast<uint64_t>(value) >= max
+                    ? static_cast<uint16_t>(max)
+                    : static_cast<uint16_t>(value);
+
+        if (channel == RED) {
+            if (px.r != v)
+                px.r = v;
+        }
+        else if (channel == GREEN) {
+            if (px.g != v)
+                px.g = v;
+        }
+        else if (channel == BLUE) {
+            if (px.b != v)
+                px.b = v;
+        }
+        else if (channel == ALL) {
+            if (px.r != v)
+                px.r = v;
+
+            if (px.g != v)
+                px.g = v;
+
+            if (px.b != v)
+                px.b = v;
+        }
+    }
+
+
+    inline void set_pixel(
+
+        RGB_32& px,
+        unsigned char bitdepth,
+        int64_t value,
+        Channel channel = ALL
+
+    ){
+
+        if (bitdepth == 0)
+            return;
+
+        const uint64_t max =
+            bitdepth >= 32
+                ? UINT64_C(4294967295)
+                : ((UINT64_C(1) << bitdepth) - UINT64_C(1));
+
+        const uint32_t v =
+            value <= 0
+                ? uint32_t{0}
+                : static_cast<uint64_t>(value) >= max
+                    ? static_cast<uint32_t>(max)
+                    : static_cast<uint32_t>(value);
+
+        if (channel == RED) {
+            if (px.r != v)
+                px.r = v;
+        }
+        else if (channel == GREEN) {
+            if (px.g != v)
+                px.g = v;
+        }
+        else if (channel == BLUE) {
+            if (px.b != v)
+                px.b = v;
+        }
+        else if (channel == ALL) {
+            if (px.r != v)
+                px.r = v;
+
+            if (px.g != v)
+                px.g = v;
+
+            if (px.b != v)
+                px.b = v;
+        }
+    }
+
+
+    inline void add_pixel(
+
+        RGB_8& px,
+        unsigned char bitdepth,
+        int64_t value,
+        Channel channel = ALL
+
+    ){
+
+        if (bitdepth == 0 || value <= 0)
+            return;
+
+        const uint32_t max =
+            bitdepth >= 8
+                ? 255u
+                : ((1u << bitdepth) - 1u);
+
+        const uint64_t amount = static_cast<uint64_t>(value);
+
+        if (channel == RED) {
+            const uint8_t old = px.r;
+
+            if (old < max) {
+                const uint8_t v =
+                    amount >= static_cast<uint64_t>(max - old)
+                        ? static_cast<uint8_t>(max)
+                        : static_cast<uint8_t>(old + amount);
+
+                if (old != v)
+                    px.r = v;
+            }
+        }
+        else if (channel == GREEN) {
+            const uint8_t old = px.g;
+
+            if (old < max) {
+                const uint8_t v =
+                    amount >= static_cast<uint64_t>(max - old)
+                        ? static_cast<uint8_t>(max)
+                        : static_cast<uint8_t>(old + amount);
+
+                if (old != v)
+                    px.g = v;
+            }
+        }
+        else if (channel == BLUE) {
+            const uint8_t old = px.b;
+
+            if (old < max) {
+                const uint8_t v =
+                    amount >= static_cast<uint64_t>(max - old)
+                        ? static_cast<uint8_t>(max)
+                        : static_cast<uint8_t>(old + amount);
+
+                if (old != v)
+                    px.b = v;
+            }
+        }
+        else if (channel == ALL) {
+            if (px.r < max) {
+                const uint8_t old = px.r;
+                px.r = amount >= static_cast<uint64_t>(max - old)
+                    ? static_cast<uint8_t>(max)
+                    : static_cast<uint8_t>(old + amount);
+            }
+
+            if (px.g < max) {
+                const uint8_t old = px.g;
+                px.g = amount >= static_cast<uint64_t>(max - old)
+                    ? static_cast<uint8_t>(max)
+                    : static_cast<uint8_t>(old + amount);
+            }
+
+            if (px.b < max) {
+                const uint8_t old = px.b;
+                px.b = amount >= static_cast<uint64_t>(max - old)
+                    ? static_cast<uint8_t>(max)
+                    : static_cast<uint8_t>(old + amount);
+            }
+        }
+    }
+
+
+    inline void subtract_pixel(
+
+        RGB_8& px,
+        unsigned char bitdepth,
+        int64_t value,
+        Channel channel = ALL
+
+    ){
+
+        if (bitdepth == 0 || value <= 0)
+            return;
+
+        const uint32_t max =
+            bitdepth >= 8
+                ? 255u
+                : ((1u << bitdepth) - 1u);
+
+        (void)max; // Range maximum is only needed for consistency with add_pixel.
+
+        const uint64_t amount = static_cast<uint64_t>(value);
+
+        if (channel == RED) {
+            const uint8_t old = px.r;
+
+            if (old > 0)
+                px.r = amount >= old
+                    ? uint8_t{0}
+                    : static_cast<uint8_t>(old - amount);
+        }
+        else if (channel == GREEN) {
+            const uint8_t old = px.g;
+
+            if (old > 0)
+                px.g = amount >= old
+                    ? uint8_t{0}
+                    : static_cast<uint8_t>(old - amount);
+        }
+        else if (channel == BLUE) {
+            const uint8_t old = px.b;
+
+            if (old > 0)
+                px.b = amount >= old
+                    ? uint8_t{0}
+                    : static_cast<uint8_t>(old - amount);
+        }
+        else if (channel == ALL) {
+            if (px.r > 0) {
+                const uint8_t old = px.r;
+                px.r = amount >= old
+                    ? uint8_t{0}
+                    : static_cast<uint8_t>(old - amount);
+            }
+
+            if (px.g > 0) {
+                const uint8_t old = px.g;
+                px.g = amount >= old
+                    ? uint8_t{0}
+                    : static_cast<uint8_t>(old - amount);
+            }
+
+            if (px.b > 0) {
+                const uint8_t old = px.b;
+                px.b = amount >= old
+                    ? uint8_t{0}
+                    : static_cast<uint8_t>(old - amount);
+            }
+        }
+    }
+
+
+    inline void add_pixel(
+
+        RGB_16& px,
+        unsigned char bitdepth,
+        int64_t value,
+        Channel channel = ALL
+
+    ){
+
+        if (bitdepth == 0 || value <= 0)
+            return;
+
+        const uint32_t max =
+            bitdepth >= 16
+                ? 65535u
+                : ((1u << bitdepth) - 1u);
+
+        const uint64_t amount = static_cast<uint64_t>(value);
+
+        if (channel == RED) {
+            const uint16_t old = px.r;
+
+            if (old < max)
+                px.r = amount >= static_cast<uint64_t>(max - old)
+                    ? static_cast<uint16_t>(max)
+                    : static_cast<uint16_t>(old + amount);
+        }
+        else if (channel == GREEN) {
+            const uint16_t old = px.g;
+
+            if (old < max)
+                px.g = amount >= static_cast<uint64_t>(max - old)
+                    ? static_cast<uint16_t>(max)
+                    : static_cast<uint16_t>(old + amount);
+        }
+        else if (channel == BLUE) {
+            const uint16_t old = px.b;
+
+            if (old < max)
+                px.b = amount >= static_cast<uint64_t>(max - old)
+                    ? static_cast<uint16_t>(max)
+                    : static_cast<uint16_t>(old + amount);
+        }
+        else if (channel == ALL) {
+            if (px.r < max) {
+                const uint16_t old = px.r;
+                px.r = amount >= static_cast<uint64_t>(max - old)
+                    ? static_cast<uint16_t>(max)
+                    : static_cast<uint16_t>(old + amount);
+            }
+
+            if (px.g < max) {
+                const uint16_t old = px.g;
+                px.g = amount >= static_cast<uint64_t>(max - old)
+                    ? static_cast<uint16_t>(max)
+                    : static_cast<uint16_t>(old + amount);
+            }
+
+            if (px.b < max) {
+                const uint16_t old = px.b;
+                px.b = amount >= static_cast<uint64_t>(max - old)
+                    ? static_cast<uint16_t>(max)
+                    : static_cast<uint16_t>(old + amount);
+            }
+        }
+    }
+
+
+    inline void subtract_pixel(
+
+        RGB_16& px,
+        unsigned char bitdepth,
+        int64_t value,
+        Channel channel = ALL
+
+    ){
+
+        if (bitdepth == 0 || value <= 0)
+            return;
+
+        const uint64_t amount = static_cast<uint64_t>(value);
+
+        if (channel == RED) {
+            const uint16_t old = px.r;
+            if (old > 0)
+                px.r = amount >= old ? uint16_t{0} : static_cast<uint16_t>(old - amount);
+        }
+        else if (channel == GREEN) {
+            const uint16_t old = px.g;
+            if (old > 0)
+                px.g = amount >= old ? uint16_t{0} : static_cast<uint16_t>(old - amount);
+        }
+        else if (channel == BLUE) {
+            const uint16_t old = px.b;
+            if (old > 0)
+                px.b = amount >= old ? uint16_t{0} : static_cast<uint16_t>(old - amount);
+        }
+        else if (channel == ALL) {
+            if (px.r > 0) {
+                const uint16_t old = px.r;
+                px.r = amount >= old ? uint16_t{0} : static_cast<uint16_t>(old - amount);
+            }
+
+            if (px.g > 0) {
+                const uint16_t old = px.g;
+                px.g = amount >= old ? uint16_t{0} : static_cast<uint16_t>(old - amount);
+            }
+
+            if (px.b > 0) {
+                const uint16_t old = px.b;
+                px.b = amount >= old ? uint16_t{0} : static_cast<uint16_t>(old - amount);
+            }
+        }
+    }
+
+
+    inline void add_pixel(
+
+        RGB_32& px,
+        unsigned char bitdepth,
+        int64_t value,
+        Channel channel = ALL
+
+    ){
+
+        if (bitdepth == 0 || value <= 0)
+            return;
+
+        const uint64_t max =
+            bitdepth >= 32
+                ? UINT64_C(0xFFFFFFFF)
+                : ((UINT64_C(1) << bitdepth) - UINT64_C(1));
+
+        const uint64_t amount = static_cast<uint64_t>(value);
+
+        if (channel == RED) {
+            const uint32_t old = px.r;
+
+            if (static_cast<uint64_t>(old) < max)
+                px.r = amount >= max - old
+                    ? static_cast<uint32_t>(max)
+                    : static_cast<uint32_t>(old + amount);
+        }
+        else if (channel == GREEN) {
+            const uint32_t old = px.g;
+
+            if (static_cast<uint64_t>(old) < max)
+                px.g = amount >= max - old
+                    ? static_cast<uint32_t>(max)
+                    : static_cast<uint32_t>(old + amount);
+        }
+        else if (channel == BLUE) {
+            const uint32_t old = px.b;
+
+            if (static_cast<uint64_t>(old) < max)
+                px.b = amount >= max - old
+                    ? static_cast<uint32_t>(max)
+                    : static_cast<uint32_t>(old + amount);
+        }
+        else if (channel == ALL) {
+            if (static_cast<uint64_t>(px.r) < max) {
+                const uint32_t old = px.r;
+                px.r = amount >= max - old
+                    ? static_cast<uint32_t>(max)
+                    : static_cast<uint32_t>(old + amount);
+            }
+
+            if (static_cast<uint64_t>(px.g) < max) {
+                const uint32_t old = px.g;
+                px.g = amount >= max - old
+                    ? static_cast<uint32_t>(max)
+                    : static_cast<uint32_t>(old + amount);
+            }
+
+            if (static_cast<uint64_t>(px.b) < max) {
+                const uint32_t old = px.b;
+                px.b = amount >= max - old
+                    ? static_cast<uint32_t>(max)
+                    : static_cast<uint32_t>(old + amount);
+            }
+        }
+    }
+
+
+    inline void subtract_pixel(
+
+        RGB_32& px,
+        unsigned char bitdepth,
+        int64_t value,
+        Channel channel = ALL
+
+    ){
+
+        if (bitdepth == 0 || value <= 0)
+            return;
+
+        const uint64_t amount = static_cast<uint64_t>(value);
+
+        if (channel == RED) {
+            const uint32_t old = px.r;
+            if (old > 0)
+                px.r = amount >= old ? uint32_t{0} : static_cast<uint32_t>(old - amount);
+        }
+        else if (channel == GREEN) {
+            const uint32_t old = px.g;
+            if (old > 0)
+                px.g = amount >= old ? uint32_t{0} : static_cast<uint32_t>(old - amount);
+        }
+        else if (channel == BLUE) {
+            const uint32_t old = px.b;
+            if (old > 0)
+                px.b = amount >= old ? uint32_t{0} : static_cast<uint32_t>(old - amount);
+        }
+        else if (channel == ALL) {
+            if (px.r > 0) {
+                const uint32_t old = px.r;
+                px.r = amount >= old ? uint32_t{0} : static_cast<uint32_t>(old - amount);
+            }
+
+            if (px.g > 0) {
+                const uint32_t old = px.g;
+                px.g = amount >= old ? uint32_t{0} : static_cast<uint32_t>(old - amount);
+            }
+
+            if (px.b > 0) {
+                const uint32_t old = px.b;
+                px.b = amount >= old ? uint32_t{0} : static_cast<uint32_t>(old - amount);
+            }
+        }
+    }
 
 }
 

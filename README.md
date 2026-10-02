@@ -250,6 +250,59 @@ siml::effect::invert(
 
 ---
 
+## Temperature
+
+SIML provides a temperature effect which is used to increase / decrease the temperature of an image.
+
+### Syntax
+```cpp
+siml::effect::temperature(
+    <Image>,
+    <Value>
+);
+```
+
+Example:
+```cpp
+siml::effect::invert(
+    image,
+    23.0
+);
+```
+
+ > **Note**: Siml mostly takes percentage values, Here it does not take temperature in kelvin at all. Instead you give a precise double value to set up the percentage for temperature increment / decrement.
+
+---
+
+## channel_blue_intensity / channel_red_intensity / channel_green_intensity
+
+SIML provides full color channel intensity controling effects which allows you to control how intensed a particular channel in your image looks. This effect also takes the value in percentage and applies the intensity mathematically.
+
+### Syntax
+```cpp
+siml::effect::channel_<blue/red/green>_intensity(
+    <Image>,
+    <Value>
+);
+```
+
+Example:
+```cpp
+siml::effect::channel_blue_intensity(
+    image,
+    10
+);
+siml::effect::channel_red_intensity(
+    image,
+    -10
+);
+// increasing the temperature overall
+```
+
+ > **Note**: The `temperature` effect also uses these but extremely carefully and uses the division by 8 for the values to keep the temperatures controlled.
+
+---
+
 ## Design Philosophy
 
 SIML aims to keep image manipulation simple.
