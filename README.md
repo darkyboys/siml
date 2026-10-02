@@ -1,4 +1,4 @@
-# SIML
+w# SIML
 
 **SIML — Simple Image Manipulation Library for C++**
 
@@ -264,7 +264,7 @@ siml::effect::temperature(
 
 Example:
 ```cpp
-siml::effect::invert(
+siml::effect::temperature(
     image,
     23.0
 );
@@ -311,6 +311,13 @@ Instead of exposing complicated processing pipelines, the API is designed around
 
 ```cpp
 effect(image, value, unit);
+```
+
+or just
+
+
+```cpp
+effect(image, value);
 ```
 
 The goal is that using SIML should require very little knowledge of its internal implementation.
