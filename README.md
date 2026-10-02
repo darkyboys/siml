@@ -1,4 +1,4 @@
-w# SIML
+# SIML
 
 **SIML — Simple Image Manipulation Library for C++**
 
