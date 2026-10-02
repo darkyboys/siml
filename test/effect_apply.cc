@@ -5,7 +5,9 @@ int main(){
     siml::ImageReader reader;
     siml::Image image = reader.read("myfile.png");
 
-    siml::effect::precision_brightness(image, -10);
+    // siml::effect::precision_brightness(image, -10);
+    siml::effect::invert(image);
+    siml::effect::invert(image);
 
     // siml::effect::grayscale(image);
     // siml::effect::brightness(image, 50, siml::NEGATIVE_PIXEL);

@@ -1,4 +1,5 @@
 # Build the library
+rm -rf siml
 echo "Making the 'siml' directory"
 mkdir -p siml 2>/dev/null
 echo ""
@@ -16,6 +17,7 @@ echo "Making the effects!"
 clang++ -O3 src/effects/brightness.cc -c -o siml/brightness.o &&\
 clang++ -O3 src/effects/precision_brightness.cc -c -o siml/precision_brightness.o &&\
 clang++ -O3 src/effects/grayscale.cc -c -o siml/grayscale.o &&\
+clang++ -O3 src/effects/invert.cc -c -o siml/invert.o &&\
 echo ""
 
 

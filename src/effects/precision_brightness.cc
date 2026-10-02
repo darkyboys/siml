@@ -141,20 +141,20 @@ namespace siml::effect {
 
     void precision_brightness(
         Image& img,
-        float value
+        double value
     ){
         if ((int)img.bitdepth <= 8){
 
             // std::cout << (int)incr << "\nNPercent: "<<util::normalize_percentage(value)<<'\n';
 
             if (value < 0.0){ // Negative
-                uint8_t incr = (util::normalize_percentage(value) * -1.0) * UINT8_MAX;
+                uint8_t incr = (util::normalize_percentage(value) * -1.0) * util::get_max_possible_values_in_bit_depth(img.bitdepth);
                 // std::cout << (int)incr << "\nNPercent: "<<util::normalize_percentage(value)<<'\n';
                 for (std::size_t i = 0;i < img.total_pixels;i++)
                     img.pixels_8bit[i] -= incr;
             }
             else{
-                uint8_t incr = util::normalize_percentage(value) * UINT8_MAX;
+                uint8_t incr = util::normalize_percentage(value) * util::get_max_possible_values_in_bit_depth(img.bitdepth);
                 for (std::size_t i = 0;i < img.total_pixels;i++)
                     img.pixels_8bit[i] += incr;
             }
@@ -165,12 +165,12 @@ namespace siml::effect {
         else if ((int)img.bitdepth <= 16){
             
             if (value < 0.0){
-                uint16_t incr = (util::normalize_percentage(value) * -1.0)  * UINT16_MAX;
+                uint16_t incr = (util::normalize_percentage(value) * -1.0)  * util::get_max_possible_values_in_bit_depth(img.bitdepth);
                 for (std::size_t i = 0;i < img.total_pixels;i++)
                     img.pixels_16bit[i] -= incr;
             }
             else{
-                uint16_t incr = util::normalize_percentage(value)  * UINT16_MAX;
+                uint16_t incr = util::normalize_percentage(value)  * util::get_max_possible_values_in_bit_depth(img.bitdepth);
                 for (std::size_t i = 0;i < img.total_pixels;i++)
                     img.pixels_16bit[i] += incr;
             }
@@ -181,12 +181,12 @@ namespace siml::effect {
         else if ((int)img.bitdepth <= 32){
             
             if (value < 0.0){
-                uint32_t incr = (util::normalize_percentage(value) * -1.0)  * UINT32_MAX;
+                uint32_t incr = (util::normalize_percentage(value) * -1.0)  * util::get_max_possible_values_in_bit_depth(img.bitdepth);
                 for (std::size_t i = 0;i < img.total_pixels;i++)
                     img.pixels_32bit[i] -= incr;
             }
             else{
-                uint32_t incr = util::normalize_percentage(value)  * UINT32_MAX;
+                uint32_t incr = util::normalize_percentage(value)  * util::get_max_possible_values_in_bit_depth(img.bitdepth);
                 for (std::size_t i = 0;i < img.total_pixels;i++)
                     img.pixels_32bit[i] += incr;
             }

@@ -139,5 +139,6 @@ express Statement of Purpose.
 #include "effects/brightness.hh"
 #include "effects/precision_brightness.hh"
 #include "effects/grayscale.hh"
+#include "effects/invert.hh"
 
 #endif

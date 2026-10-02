@@ -128,19 +128,54 @@ express Statement of Purpose.
 // A Library specifically made to be fully STL Compatible and extremely easy to use with full transparency.
 // The entire library is cuvered under the CC0 v1 Universal License.
 
-#ifndef SIML_EFFECT_PRECISION_BRIGHTNESS
-#define SIML_EFFECT_PRECISION_BRIGHTNESS
+#ifndef SIML_EFFECT_INVERT
+#define SIML_EFFECT_INVERT
 
-#include "../util.hh"
-#include "../image/image.hh"
+#include "../../effects/invert.hh"
+#include "../../image/image.hh"
+#include "../../util.hh"
+#include <algorithm>
 #include <cstdint>
+#include <stdexcept>
 
 namespace siml::effect {
 
-    void precision_brightness(
-        Image& img,
-        double value
-    );
+    void invert(
+        Image& img
+    ){
+
+        if ((int)img.bitdepth <= 8){
+            uint8_t maximum = util::get_max_possible_values_in_bit_depth(img.bitdepth);
+            for (std::size_t i = 0;i < img.total_pixels;i++){
+                img.pixels_8bit[i].r = maximum - img.pixels_8bit[i].r;
+                img.pixels_8bit[i].g = maximum - img.pixels_8bit[i].g;
+                img.pixels_8bit[i].b = maximum - img.pixels_8bit[i].b;
+            }
+        }
+
+        else if ((int)img.bitdepth <= 16){
+            uint16_t maximum = util::get_max_possible_values_in_bit_depth(img.bitdepth);
+            for (std::size_t i = 0;i < img.total_pixels;i++){
+                img.pixels_16bit[i].r = maximum - img.pixels_16bit[i].r;
+                img.pixels_16bit[i].g = maximum - img.pixels_16bit[i].g;
+                img.pixels_16bit[i].b = maximum - img.pixels_16bit[i].b;
+            }
+        }
+
+        else if ((int)img.bitdepth <= 32){
+            uint32_t maximum = util::get_max_possible_values_in_bit_depth(img.bitdepth);
+            for (std::size_t i = 0;i < img.total_pixels;i++){
+                img.pixels_32bit[i].r = maximum - img.pixels_32bit[i].r;
+                img.pixels_32bit[i].g = maximum - img.pixels_32bit[i].g;
+                img.pixels_32bit[i].b = maximum - img.pixels_32bit[i].b;
+            }
+        }
+
+        else {
+            throw std::runtime_error("SIML Error From siml::effect::invert(): Invalid bit depth found in the given image.\n");
+        }
+
+    }
 
 }
 

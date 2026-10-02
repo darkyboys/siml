@@ -466,4 +466,14 @@ int main()
         },
         1000
     );
+
+    benchmark(
+        "invert",
+        [&]() {
+            siml::effect::invert(
+                image
+            );
+        },
+        1000
+    );
 }

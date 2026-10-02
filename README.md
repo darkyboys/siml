@@ -230,6 +230,26 @@ siml::effect::precision_brightness(
 
 ---
 
+## Invert
+
+SIML provides an invert effect which allows you to invert the colors of an image! (Reinverting an inverted image recovers it)
+
+### Syntax
+```cpp
+siml::effect::invert(
+    <Image>
+);
+```
+
+Example:
+```cpp
+siml::effect::invert(
+    image
+);
+```
+
+---
+
 ## Design Philosophy
 
 SIML aims to keep image manipulation simple.

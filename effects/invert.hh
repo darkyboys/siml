@@ -128,8 +128,8 @@ express Statement of Purpose.
 // A Library specifically made to be fully STL Compatible and extremely easy to use with full transparency.
 // The entire library is cuvered under the CC0 v1 Universal License.
 
-#ifndef SIML_EFFECT_PRECISION_BRIGHTNESS
-#define SIML_EFFECT_PRECISION_BRIGHTNESS
+#ifndef SIML_EFFECT_INVERT
+#define SIML_EFFECT_INVERT
 
 #include "../util.hh"
 #include "../image/image.hh"
@@ -137,9 +137,8 @@ express Statement of Purpose.
 
 namespace siml::effect {
 
-    void precision_brightness(
-        Image& img,
-        double value
+    void invert(
+        Image& img
     );
 
 }
